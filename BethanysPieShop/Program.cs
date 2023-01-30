@@ -2,6 +2,7 @@ using BethanysPieShop.Context;
 using BethanysPieShop.Interfaces;
 using BethanysPieShop.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +14,12 @@ builder.Services.AddScoped<IShoppingCart, ShoppingCartRepository>(sp => Shopping
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
+
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<BethanysPieShopDbContext>(options => {
     options.UseSqlServer(
