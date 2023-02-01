@@ -38,6 +38,7 @@ var app = builder.Build();
 app.UseStaticFiles();
 app.UseSession();
 app.UseAuthentication();
+app.UseAuthorization();
 
 if (app.Environment.IsDevelopment())
 {
